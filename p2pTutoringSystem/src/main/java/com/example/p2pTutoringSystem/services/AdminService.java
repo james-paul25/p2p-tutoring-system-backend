@@ -47,7 +47,6 @@ public class AdminService {
             return result.isEmpty() ? "User registered successfully!" : result;
 
         } else {
-            //throw new IllegalStateException("please use your BISU email");
             return "please use your BISU email";
         }
     }
