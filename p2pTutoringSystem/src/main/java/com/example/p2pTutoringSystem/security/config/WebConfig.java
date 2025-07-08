@@ -12,7 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**") // Allow all endpoints
                 .allowedOrigins("http://localhost:5173") // Allow your frontend URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow specific methods
-                .allowedHeaders("*"); // Allow all headers
+                .allowedHeaders("*") // Allow all headers
+                .allowCredentials(true);
     }
 
     @Override

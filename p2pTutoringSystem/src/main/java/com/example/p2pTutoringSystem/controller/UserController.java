@@ -8,6 +8,7 @@ import com.example.p2pTutoringSystem.entities.User;
 import com.example.p2pTutoringSystem.services.StudentService;
 import com.example.p2pTutoringSystem.services.UserRegistrationService;
 import com.example.p2pTutoringSystem.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController()
 @RequestMapping(path = "api/v1/users")
 @AllArgsConstructor
@@ -29,11 +30,13 @@ public class UserController {
     private final StudentService studentService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody EmailLoginRequest request) {
+    public ResponseEntity<?> loginUser(@RequestBody EmailLoginRequest request,
+                                       HttpSession session) {
         boolean isLoggedInUsingEmail = userService.isLogin(request.getEmail(), request.getPassword());
         if (isLoggedInUsingEmail) {
             User user = userService.getUserByEmail(request.getEmail());
 
+            session.setAttribute("user", user);
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Login successful");
             response.put("role", user.getRole());
@@ -43,6 +46,8 @@ public class UserController {
         }
         return ResponseEntity.status(401).body("Invalid credentials.");
     }
+
+
 
     @PostMapping("/registration")
     public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
