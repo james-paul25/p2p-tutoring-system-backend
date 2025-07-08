@@ -41,13 +41,12 @@ public class UserController {
             response.put("message", "Login successful");
             response.put("role", user.getRole());
             response.put("userId", user.getUserId());
+            response.put("email", user.getEmail());
             response.put("username", user.getUsername());
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(401).body("Invalid credentials.");
     }
-
-
 
     @PostMapping("/registration")
     public ResponseEntity<String> registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
