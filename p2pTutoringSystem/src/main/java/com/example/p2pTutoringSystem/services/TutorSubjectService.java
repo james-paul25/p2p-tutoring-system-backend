@@ -35,7 +35,7 @@ public class TutorSubjectService {
         Optional<TutorSubject> tutorSubjectOptional = tutorSubjectRepository.findByTutorAndSubject(tutor, subject);
         if(tutorSubjectOptional.isPresent()) { return "You already have this tutor subject"; }
 
-        if(tutorSubjectRequest.getGrade() > 1.7 || tutorSubjectRequest.getGrade() < 1.0) {
+        if(tutorSubjectRequest.getGrade() > 1.6 || tutorSubjectRequest.getGrade() < 1.0) {
             return "You do not have enough grade";
         }
 
