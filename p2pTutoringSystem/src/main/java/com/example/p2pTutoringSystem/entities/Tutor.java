@@ -15,7 +15,6 @@ import java.util.Date;
 @Table(name = "Tutors")
 public class Tutor {
 
-    // add bio here
     // tutor select subject and put their grade, with 1.7 above can become tutor
 
     @Id

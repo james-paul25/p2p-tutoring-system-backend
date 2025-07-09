@@ -33,6 +33,9 @@ public class Student {
     @Column(name = "year_level")
     private int yearLevel;
 
+    @Column(name= "bio")
+    private String bio;
+
     @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;

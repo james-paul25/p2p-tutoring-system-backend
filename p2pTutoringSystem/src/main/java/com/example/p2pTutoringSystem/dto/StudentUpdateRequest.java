@@ -11,4 +11,5 @@ public class StudentUpdateRequest {
     private String lastName;
     private int yearLevel;
     private long departmentId;
+    private String bio;
 }

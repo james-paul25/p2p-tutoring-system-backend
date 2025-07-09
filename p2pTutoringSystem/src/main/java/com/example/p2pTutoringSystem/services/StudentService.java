@@ -41,6 +41,7 @@ public class StudentService {
         student.setLastName(studentUpdateRequest.getLastName());
         student.setYearLevel(studentUpdateRequest.getYearLevel());
         student.setDepartment(department);
+        student.setBio(studentUpdateRequest.getBio());
 
         studentRepository.save(student);
 
