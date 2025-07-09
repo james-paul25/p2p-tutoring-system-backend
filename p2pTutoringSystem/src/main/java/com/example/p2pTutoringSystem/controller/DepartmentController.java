@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController()
 @RequestMapping("api/v1/departments")
 @AllArgsConstructor
@@ -27,11 +27,12 @@ public class DepartmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/getAllDepartment")    
+    @GetMapping("/get-all-department")
     public List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
+    //admin
     @DeleteMapping("/delete/{departmentId}")
     public ResponseEntity<?> deleteDepartmentById(@PathVariable Long departmentId) {
         String response = departmentService.deleteDepartmentById(departmentId);
