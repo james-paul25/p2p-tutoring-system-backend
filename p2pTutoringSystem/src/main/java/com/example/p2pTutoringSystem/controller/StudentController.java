@@ -44,6 +44,4 @@ public class StudentController {
                 .collect(Collectors.toList());
     }
 
-
-
 }
