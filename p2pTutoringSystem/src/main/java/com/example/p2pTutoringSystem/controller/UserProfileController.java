@@ -17,9 +17,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController()
 @RequestMapping("api/v1/profile-picture")
 @AllArgsConstructor
@@ -29,7 +30,7 @@ public class UserProfileController {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
 
-    @PostMapping("/upload/{userId}")
+    @PostMapping("/{userId}")
     public ResponseEntity<?> uploadProfileImage(@PathVariable Long userId, @RequestParam("file") MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -111,6 +112,72 @@ public class UserProfileController {
 
         return ResponseEntity.ok("Profile picture updated successfully.");
     }
+
+    @PostMapping("/upload/{userId}")
+    public ResponseEntity<?> uploadOrUpdateProfileImage(
+            @PathVariable Long userId,
+            @RequestParam("file") MultipartFile file) {
+
+        try {
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("No file uploaded");
+            }
+
+            if (!file.getContentType().startsWith("image/")) {
+                return ResponseEntity.badRequest().body("Only image files are allowed.");
+            }
+
+            // Ensure upload directory exists
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // Generate unique filename
+            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            Path filePath = uploadPath.resolve(fileName);
+
+            // Save the file
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            // Fetch user
+            Optional<User> userOptional = userRepository.findByUserId(userId);
+            if (userOptional.isEmpty()) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+
+            User user = userOptional.get();
+
+            // Check if profile exists
+            Optional<UserProfile> profileOptional = userProfileService.checkProfileByUser(user);
+
+            UserProfile profile;
+            if (profileOptional.isPresent()) {
+                // Update existing
+                profile = profileOptional.get();
+                profile.setFilePath("/uploads/" + fileName);
+            } else {
+                // Create new
+                profile = new UserProfile(user, "/uploads/" + fileName);
+            }
+
+            userProfileRepository.save(profile);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Profile image saved successfully",
+                    "filePath", profile.getFilePath()
+            ));
+
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().body("Error saving file");
+        }
+    }
+
+
+
+
 
 
 }
