@@ -27,8 +27,8 @@ public class StudentService {
            return "Student not found";
         }
 
-        Optional<Department> departmentOptional = departmentRepository.findByDepartmentId(
-                studentUpdateRequest.getDepartmentId());
+        Optional<Department> departmentOptional = departmentRepository.findByDepartmentName(
+                studentUpdateRequest.getDepartment());
         if(!departmentOptional.isPresent()) {
             return "Department not found";
         }
@@ -41,7 +41,6 @@ public class StudentService {
         student.setLastName(studentUpdateRequest.getLastName());
         student.setYearLevel(studentUpdateRequest.getYearLevel());
         student.setDepartment(department);
-        student.setBio(studentUpdateRequest.getBio());
 
         studentRepository.save(student);
 
