@@ -2,11 +2,13 @@ package com.example.p2pTutoringSystem.services;
 
 import com.example.p2pTutoringSystem.dto.ApplyAsTutor;
 import com.example.p2pTutoringSystem.entities.Student;
+import com.example.p2pTutoringSystem.entities.Subject;
 import com.example.p2pTutoringSystem.entities.Tutor;
 import com.example.p2pTutoringSystem.entities.User;
 import com.example.p2pTutoringSystem.enumarate.TutorStatus;
 import com.example.p2pTutoringSystem.enumarate.UserRole;
 import com.example.p2pTutoringSystem.repositories.StudentRepository;
+import com.example.p2pTutoringSystem.repositories.SubjectRepository;
 import com.example.p2pTutoringSystem.repositories.TutorRepository;
 import com.example.p2pTutoringSystem.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,7 @@ public class TutorService {
     private TutorRepository tutorRepository;
     private StudentRepository studentRepository;
     private UserRepository userRepository;
+    private SubjectRepository subjectRepository;
 
     public String applyAsTutor(long userId, long studentID, ApplyAsTutor applyAsTutor) {
         Optional<Tutor> tutorExist = tutorRepository.findByUser_UserId(userId);
@@ -31,14 +34,17 @@ public class TutorService {
 
         Optional<User> userOptional = userRepository.findByUserId(userId);
         Optional<Student> studentOptional = studentRepository.findByStudentId(studentID);
+        Optional<Subject> subjectOptional = subjectRepository.findBySubjectDescription(applyAsTutor.getSubject());
         if (!userOptional.isPresent()) { return "User not found."; }
         if (!studentOptional.isPresent()) { return "Student not found."; }
+        if (!subjectOptional.isPresent()) { return "Subject not found."; }
 
         User user = userOptional.get();
         Student student = studentOptional.get();
+        Subject  subject = subjectOptional.get();
 
         double gwa = applyAsTutor.getGwa();
-        double requiredGwa = 1.8;
+        double requiredGwa = 1.7;
         if(gwa >= requiredGwa){ return "Your GPA must be at least " +
                 requiredGwa + " to apply as a tutor."; }
 
@@ -46,7 +52,8 @@ public class TutorService {
                 user,
                 student,
                 gwa,
-                TutorStatus.PENDING
+                TutorStatus.PENDING,
+                subject
         ));
 
         user.setRole(UserRole.TUTOR);

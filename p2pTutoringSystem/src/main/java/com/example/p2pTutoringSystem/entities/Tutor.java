@@ -15,6 +15,9 @@ import java.util.Date;
 @Table(name = "Tutors")
 public class Tutor {
 
+    // add bio here
+    // tutor select subject and put their grade, with 1.7 above can become tutor
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name= "tutor_id")
@@ -27,6 +30,10 @@ public class Tutor {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name="subject_id", nullable = false)
+    private Subject subject;
 
     @Column(nullable = false, name="gwa")
     private double gwa;
@@ -45,7 +52,7 @@ public class Tutor {
     }
 
     // apply as tutor
-    public Tutor(User user, Student student, double gwa, TutorStatus status) {
+    public Tutor(User user, Student student, double gwa, TutorStatus status, Subject subject) {
         this.student = student;
         this.user = user;
         this.gwa = gwa;

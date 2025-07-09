@@ -13,5 +13,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
     Optional<Subject> findBySubjectId(Long id);
     Optional<Subject> findBySubjectName(String subjectName);
+    Optional<Subject> findBySubjectDescription(String subjectDesc);
 
 }
