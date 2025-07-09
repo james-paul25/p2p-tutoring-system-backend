@@ -49,7 +49,8 @@ public class SessionService {
                 subject,
                 SessionStatus.PENDING,
                 sessionRequest.getSessionDate(),
-                sessionRequest.getSessionTime()
+                sessionRequest.getSessionTime(),
+                sessionRequest.getNotes()
         ));
 
         return "You apply successfully";

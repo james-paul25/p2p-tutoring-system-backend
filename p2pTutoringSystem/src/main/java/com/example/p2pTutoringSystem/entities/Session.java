@@ -36,6 +36,9 @@ public class Session {
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
+    @Column(name = "notes")
+    private String notes;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "session_status")
     private SessionStatus sessionStatus;
@@ -56,13 +59,14 @@ public class Session {
     }
 
     public Session(Student student, Tutor tutor, Subject subject, SessionStatus sessionStatus,
-                   LocalDate sessionDate, LocalTime sessionTime) {
+                   LocalDate sessionDate, LocalTime sessionTime, String notes) {
         this.student = student;
         this.tutor = tutor;
         this.subject = subject;
         this.sessionStatus = sessionStatus;
         this.sessionDate = sessionDate;
         this.sessionTime = sessionTime;
+        this.notes = notes;
     }
 
 }
