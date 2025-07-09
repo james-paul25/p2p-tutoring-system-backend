@@ -56,6 +56,7 @@ public class Tutor {
         this.user = user;
         this.gwa = gwa;
         this.status = status;
+        this.subject = subject;
     }
 
 }

@@ -87,6 +87,8 @@ public class TutorService {
         return tutorRepository.save(tutor);
     }
 
+    // admins
+
     public Tutor rejectTutor(long tutorId) {
         Optional<Tutor> tutorOptional = tutorRepository.findByTutorId(tutorId);
         if(!tutorOptional.isPresent()) { return null; }
@@ -103,6 +105,4 @@ public class TutorService {
         tutorRepository.delete(tutor);
         return "Tutor deleted";
     }
-
-
 }
