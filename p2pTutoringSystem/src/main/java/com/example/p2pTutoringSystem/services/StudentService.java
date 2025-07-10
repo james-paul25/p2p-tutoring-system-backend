@@ -28,8 +28,8 @@ public class StudentService {
            return "Student not found";
         }
 
-        Optional<Department> departmentOptional = departmentRepository.findByDepartmentName(
-                studentUpdateRequest.getDepartment());
+        Optional<Department> departmentOptional = departmentRepository.findByDepartmentId(
+                studentUpdateRequest.getDepartmentId());
         if(!departmentOptional.isPresent()) {
             return "Department not found";
         }
