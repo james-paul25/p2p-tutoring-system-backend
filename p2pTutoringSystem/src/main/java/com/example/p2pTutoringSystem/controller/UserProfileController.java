@@ -56,22 +56,18 @@ public class UserProfileController {
                 return ResponseEntity.badRequest().body("Only image files are allowed.");
             }
 
-            // Ensure upload directory exists
             Path uploadPath = Paths.get(UPLOAD_DIR);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
-            // Generate unique filename
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             Path filePath = uploadPath.resolve(fileName);
 
-            // Save the file
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            // Fetch user
             Optional<User> userOptional = userRepository.findByUserId(userId);
             if (userOptional.isEmpty()) {
                 return ResponseEntity.badRequest().body("User not found");
@@ -79,16 +75,13 @@ public class UserProfileController {
 
             User user = userOptional.get();
 
-            // Check if profile exists
             Optional<UserProfile> profileOptional = userProfileService.checkProfileByUser(user);
 
             UserProfile profile;
             if (profileOptional.isPresent()) {
-                // Update existing
                 profile = profileOptional.get();
                 profile.setFilePath("/uploads/" + fileName);
             } else {
-                // Create new
                 profile = new UserProfile(user, "/uploads/" + fileName);
             }
 
