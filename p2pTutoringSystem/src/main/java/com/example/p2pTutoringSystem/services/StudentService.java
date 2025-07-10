@@ -1,5 +1,6 @@
 package com.example.p2pTutoringSystem.services;
 
+import com.example.p2pTutoringSystem.dto.EditBioRequest;
 import com.example.p2pTutoringSystem.dto.StudentUpdateRequest;
 import com.example.p2pTutoringSystem.entities.Department;
 import com.example.p2pTutoringSystem.entities.Student;
@@ -45,6 +46,22 @@ public class StudentService {
         studentRepository.save(student);
 
         return "Student profile updated successfully";
+    }
+
+    public String updateBio(long studentId, EditBioRequest bioRequest){
+
+        Optional<Student> studentOptional = studentRepository.findByStudentId(studentId);
+        if (!studentOptional.isPresent()) {
+            return "Student not found";
+        }
+
+        Student student = studentOptional.get();
+
+        student.setBio(bioRequest.getBio());
+
+        studentRepository.save(student);
+
+        return "Bio edited successfully";
     }
 
     public Student getStudentByUser(User user) {

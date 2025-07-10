@@ -1,5 +1,6 @@
 package com.example.p2pTutoringSystem.controller;
 
+import com.example.p2pTutoringSystem.dto.EditBioRequest;
 import com.example.p2pTutoringSystem.dto.StudentUpdateRequest;
 import com.example.p2pTutoringSystem.entities.Student;
 import com.example.p2pTutoringSystem.repositories.StudentRepository;
@@ -10,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
@@ -33,6 +36,20 @@ public class StudentController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    @PutMapping("/edit-bio/{studentId}")
+    public ResponseEntity<?> updateStudentBio(
+            @PathVariable Long studentId,
+            @RequestBody EditBioRequest editBioRequest) {
+
+        String response = studentService.updateBio(studentId, editBioRequest);
+        if(response.equals("Bio edited successfully")) {
+            return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
     }
 
     @GetMapping("/get-all-students")
