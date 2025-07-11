@@ -39,6 +39,9 @@ public class Session {
     @Column(name = "notes")
     private String notes;
 
+    @Column(name="topic")
+    private String topic;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "session_status")
     private SessionStatus sessionStatus;
@@ -59,13 +62,15 @@ public class Session {
     }
 
     public Session(Student student, Tutor tutor, Subject subject, SessionStatus sessionStatus,
-                   LocalDate sessionDate, LocalTime sessionTime) {
+                   LocalDate sessionDate, LocalTime sessionTime,
+                   String topic) {
         this.student = student;
         this.tutor = tutor;
         this.subject = subject;
         this.sessionStatus = sessionStatus;
         this.sessionDate = sessionDate;
         this.sessionTime = sessionTime;
+        this.topic = topic;
     }
 
 }

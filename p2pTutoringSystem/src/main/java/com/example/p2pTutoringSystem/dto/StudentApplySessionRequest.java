@@ -11,4 +11,5 @@ import java.time.LocalTime;
 public class StudentApplySessionRequest {
     private LocalDate sessionDate;
     private LocalTime sessionTime;
+    private String topic;
 }
