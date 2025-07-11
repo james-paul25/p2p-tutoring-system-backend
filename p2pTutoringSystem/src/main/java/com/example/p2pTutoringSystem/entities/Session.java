@@ -59,14 +59,13 @@ public class Session {
     }
 
     public Session(Student student, Tutor tutor, Subject subject, SessionStatus sessionStatus,
-                   LocalDate sessionDate, LocalTime sessionTime, String notes) {
+                   LocalDate sessionDate, LocalTime sessionTime) {
         this.student = student;
         this.tutor = tutor;
         this.subject = subject;
         this.sessionStatus = sessionStatus;
         this.sessionDate = sessionDate;
         this.sessionTime = sessionTime;
-        this.notes = notes;
     }
 
 }
