@@ -34,7 +34,7 @@ public class TutorService {
 
         Optional<User> userOptional = userRepository.findByUserId(userId);
         Optional<Student> studentOptional = studentRepository.findByStudentId(studentID);
-        Optional<Subject> subjectOptional = subjectRepository.findBySubjectDescription(applyAsTutor.getSubject());
+        Optional<Subject> subjectOptional = subjectRepository.findBySubjectId(applyAsTutor.getSubjectId());
         if (!userOptional.isPresent()) { return "User not found."; }
         if (!studentOptional.isPresent()) { return "Student not found."; }
         if (!subjectOptional.isPresent()) { return "Subject not found."; }

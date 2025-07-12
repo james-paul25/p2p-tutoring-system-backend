@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ApplyAsTutor {
-    private String subject;
+    private long subjectId;
     private double gwa;
 }
