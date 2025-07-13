@@ -93,13 +93,14 @@ public class SessionService {
 
     // tutor can edit note
     public String updateNote(long sessionId, EditNoteRequest noteRequest){
-        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        Optional<Session> sessionOptional = sessionRepository.findBySessionId(sessionId);
         if (!sessionOptional.isPresent()) {
             return "Session Not Found";
         }
         Session session = sessionOptional.get();
 
         session.setNotes(noteRequest.getNote());
+        sessionRepository.save(session);
 
         return "Note saved successfully";
     }
