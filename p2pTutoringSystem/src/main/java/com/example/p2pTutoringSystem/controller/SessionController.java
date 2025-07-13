@@ -1,5 +1,6 @@
 package com.example.p2pTutoringSystem.controller;
 
+import com.example.p2pTutoringSystem.dto.EditNoteRequest;
 import com.example.p2pTutoringSystem.dto.SessionStatusUpdateRequest;
 import com.example.p2pTutoringSystem.dto.StudentApplySessionRequest;
 import com.example.p2pTutoringSystem.entities.Session;
@@ -70,12 +71,25 @@ public class SessionController {
     @GetMapping("/get-session-by-student/{studentId}")
     public ResponseEntity<List<Session>> getSessionByStudentId(
             @PathVariable long studentId){
-        List<Session> session = sessionService.getSessioByStudent(studentId);
+        List<Session> session = sessionService.getSessionByStudent(studentId);
         if(session.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
         return ResponseEntity.ok(session);
+    }
+
+    @PutMapping("/edit-note/{sessionId}")
+    public ResponseEntity<?> editNote(
+            @PathVariable long sessionId,
+            @RequestBody EditNoteRequest editNoteRequest) {
+
+        String response = sessionService.updateNote(sessionId, editNoteRequest);
+        if(response.equals("Note saved successfully")){
+           return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
 }

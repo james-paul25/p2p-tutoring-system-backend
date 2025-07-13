@@ -1,5 +1,7 @@
 package com.example.p2pTutoringSystem.services;
 
+import com.example.p2pTutoringSystem.dto.EditBioRequest;
+import com.example.p2pTutoringSystem.dto.EditNoteRequest;
 import com.example.p2pTutoringSystem.dto.StudentApplySessionRequest;
 import com.example.p2pTutoringSystem.entities.Session;
 import com.example.p2pTutoringSystem.entities.Student;
@@ -82,11 +84,24 @@ public class SessionService {
         return sessionRepository.findAllByTutor(tutor);
     }
 
-    public List<Session> getSessioByStudent(long studentId){
+    public List<Session> getSessionByStudent(long studentId){
         Optional<Student> studentOptional = studentRepository.findByStudentId(studentId);
         if(!studentOptional.isPresent()){ return Collections.emptyList(); }
         Student student = studentOptional.get();
         return sessionRepository.findAllByStudent(student);
+    }
+
+    // tutor can edit note
+    public String updateNote(long sessionId, EditNoteRequest noteRequest){
+        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        if (!sessionOptional.isPresent()) {
+            return "Session Not Found";
+        }
+        Session session = sessionOptional.get();
+
+        session.setNotes(noteRequest.getNote());
+
+        return "Note saved successfully";
     }
 
 }
