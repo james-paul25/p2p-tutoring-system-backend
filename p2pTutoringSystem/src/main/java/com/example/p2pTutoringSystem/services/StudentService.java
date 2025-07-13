@@ -34,6 +34,10 @@ public class StudentService {
             return "Department not found";
         }
 
+        if(studentUpdateRequest.getYearLevel() > 4 ||  studentUpdateRequest.getYearLevel() < 1) {
+            return "Invalid year level";
+        }
+
         Student student = studentOptional.get();
         Department department = departmentOptional.get();
 
