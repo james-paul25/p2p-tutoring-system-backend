@@ -99,7 +99,7 @@ public class SessionService {
         }
         Session session = sessionOptional.get();
 
-        session.setNotes(noteRequest.getNote());
+        session.setNotes(noteRequest.getNotes());
         sessionRepository.save(session);
 
         return "Note saved successfully";

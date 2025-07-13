@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EditNoteRequest {
-    private String note;
+    private String notes;
 }
