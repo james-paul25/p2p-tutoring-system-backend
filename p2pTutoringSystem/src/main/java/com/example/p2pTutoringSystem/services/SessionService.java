@@ -3,15 +3,9 @@ package com.example.p2pTutoringSystem.services;
 import com.example.p2pTutoringSystem.dto.EditBioRequest;
 import com.example.p2pTutoringSystem.dto.EditNoteRequest;
 import com.example.p2pTutoringSystem.dto.StudentApplySessionRequest;
-import com.example.p2pTutoringSystem.entities.Session;
-import com.example.p2pTutoringSystem.entities.Student;
-import com.example.p2pTutoringSystem.entities.Subject;
-import com.example.p2pTutoringSystem.entities.Tutor;
+import com.example.p2pTutoringSystem.entities.*;
 import com.example.p2pTutoringSystem.enumarate.SessionStatus;
-import com.example.p2pTutoringSystem.repositories.SessionRepository;
-import com.example.p2pTutoringSystem.repositories.StudentRepository;
-import com.example.p2pTutoringSystem.repositories.SubjectRepository;
-import com.example.p2pTutoringSystem.repositories.TutorRepository;
+import com.example.p2pTutoringSystem.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +22,7 @@ public class SessionService {
     private StudentRepository studentRepository;
     private SubjectRepository subjectRepository;
     private TutorRepository tutorRepository;
+    private UserRepository userRepository;
 
     public String studentApplySession(
             long tutorId,
@@ -38,13 +33,20 @@ public class SessionService {
         Optional<Student> studentOptional = studentRepository.findByStudentId(studentId);
         Optional<Subject> subjectOptional = subjectRepository.findBySubjectId(subjectId);
         Optional<Tutor> tutorOptional = tutorRepository.findByTutorId(tutorId);
+        Optional<User> tutorUserOptional = userRepository.findByUserId(sessionRequest.getTutorUser());
+        Optional<User> studentUserOptional = userRepository.findByUserId(sessionRequest.getStudentUser());
         if (!studentOptional.isPresent()) { return "Student Not Found"; }
         if (!subjectOptional.isPresent()) { return "Subject Not Found"; }
         if (!tutorOptional.isPresent()) { return "Tutor Not Found"; }
+        if (!tutorUserOptional.isPresent()) { return "Tutor User Not Found"; }
+        if (!studentUserOptional.isPresent()) { return "Student User Not Found"; }
 
         Student student = studentOptional.get();
         Subject subject = subjectOptional.get();
         Tutor tutor = tutorOptional.get();
+        User studentUser  = studentUserOptional.get();
+        User tutorUser = tutorUserOptional.get();
+
 
         Optional<Session> sessionOptional = sessionRepository.findByStudentAndSubjectAndTutor(student, subject, tutor);
         if (sessionOptional.isPresent()) { return "You already apply in this session"; }
@@ -57,8 +59,8 @@ public class SessionService {
                 sessionRequest.getSessionDate(),
                 sessionRequest.getSessionTime(),
                 sessionRequest.getTopic(),
-                sessionRequest.getStudentUser(),
-                sessionRequest.getTutorUser()
+                studentUser,
+                tutorUser
         ));
 
         return "You apply successfully";

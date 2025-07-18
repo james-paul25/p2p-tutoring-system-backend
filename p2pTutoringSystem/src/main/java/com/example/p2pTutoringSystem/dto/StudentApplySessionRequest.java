@@ -13,6 +13,6 @@ public class StudentApplySessionRequest {
     private LocalDate sessionDate;
     private LocalTime sessionTime;
     private String topic;
-    private User tutorUser;
-    private User studentUser;
+    private long tutorUser;
+    private long studentUser;
 }
