@@ -59,8 +59,8 @@ public class SessionService {
                 sessionRequest.getSessionDate(),
                 sessionRequest.getSessionTime(),
                 sessionRequest.getTopic(),
-                studentUser,
-                tutorUser
+                tutorUser,
+                studentUser
         ));
 
         return "You apply successfully";
