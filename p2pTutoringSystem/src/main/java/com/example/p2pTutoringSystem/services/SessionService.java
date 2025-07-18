@@ -56,7 +56,9 @@ public class SessionService {
                 SessionStatus.PENDING,
                 sessionRequest.getSessionDate(),
                 sessionRequest.getSessionTime(),
-                sessionRequest.getTopic()
+                sessionRequest.getTopic(),
+                sessionRequest.getStudentUser(),
+                sessionRequest.getTutorUser()
         ));
 
         return "You apply successfully";
@@ -86,6 +88,11 @@ public class SessionService {
         Tutor tutor = tutorOptional.get();
 
         return sessionRepository.findAllByTutor(tutor);
+    }
+
+    // getting the session by user
+    public List<Session> getSessionByUser(long userId){
+        return null;
     }
 
     public List<Session> getSessionByStudent(long studentId){

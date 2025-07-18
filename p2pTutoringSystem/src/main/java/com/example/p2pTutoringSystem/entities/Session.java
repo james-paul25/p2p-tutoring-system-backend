@@ -71,7 +71,7 @@ public class Session {
 
     public Session(Student student, Tutor tutor, Subject subject, SessionStatus sessionStatus,
                    LocalDate sessionDate, LocalTime sessionTime,
-                   String topic) {
+                   String topic, User tutorUser, User studentUser) {
         this.student = student;
         this.tutor = tutor;
         this.subject = subject;
@@ -79,6 +79,8 @@ public class Session {
         this.sessionDate = sessionDate;
         this.sessionTime = sessionTime;
         this.topic = topic;
+        this.studentUser = studentUser;
+        this.tutorUser = tutorUser;
     }
 
 }

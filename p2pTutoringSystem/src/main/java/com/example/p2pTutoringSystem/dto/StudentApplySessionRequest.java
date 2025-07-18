@@ -1,5 +1,6 @@
 package com.example.p2pTutoringSystem.dto;
 
+import com.example.p2pTutoringSystem.entities.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,4 +13,6 @@ public class StudentApplySessionRequest {
     private LocalDate sessionDate;
     private LocalTime sessionTime;
     private String topic;
+    private User tutorUser;
+    private User studentUser;
 }
