@@ -23,7 +23,7 @@ public class SessionController {
     @PostMapping("/students-apply-session/{tutorId}/{subjectId}/{studentId}")
     public ResponseEntity<String> studentApplySession(
             @PathVariable long tutorId,
-            @PathVariable long   studentId,
+            @PathVariable long studentId,
             @PathVariable long subjectId,
             @RequestBody StudentApplySessionRequest studentApplySessionRequest) {
 

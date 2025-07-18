@@ -56,6 +56,14 @@ public class Session {
     @Column(nullable = false, updatable = false, name="created_at")
     private Date createdAt;
 
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "tutor_userId")
+    private User tutorUser;
+
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "student_userId")
+    private User studentUser;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();

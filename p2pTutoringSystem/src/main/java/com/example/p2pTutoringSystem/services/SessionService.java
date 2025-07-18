@@ -29,8 +29,12 @@ public class SessionService {
     private SubjectRepository subjectRepository;
     private TutorRepository tutorRepository;
 
-    public String studentApplySession(long tutorId, long studentId, long subjectId,
-                                      StudentApplySessionRequest sessionRequest) {
+    public String studentApplySession(
+            long tutorId,
+            long studentId,
+            long subjectId,
+            StudentApplySessionRequest sessionRequest) {
+
         Optional<Student> studentOptional = studentRepository.findByStudentId(studentId);
         Optional<Subject> subjectOptional = subjectRepository.findBySubjectId(subjectId);
         Optional<Tutor> tutorOptional = tutorRepository.findByTutorId(tutorId);
