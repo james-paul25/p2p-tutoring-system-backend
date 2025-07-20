@@ -118,4 +118,10 @@ public class SessionService {
         return "Note saved successfully";
     }
 
+    public String updateStatusComplete(){
+
+
+        return null;
+    }
+
 }
