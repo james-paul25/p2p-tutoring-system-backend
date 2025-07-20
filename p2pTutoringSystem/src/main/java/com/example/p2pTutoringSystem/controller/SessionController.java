@@ -2,6 +2,7 @@ package com.example.p2pTutoringSystem.controller;
 
 import com.example.p2pTutoringSystem.dto.EditNoteRequest;
 import com.example.p2pTutoringSystem.dto.SessionStatusUpdateRequest;
+import com.example.p2pTutoringSystem.dto.SetStatusCompletedRequest;
 import com.example.p2pTutoringSystem.dto.StudentApplySessionRequest;
 import com.example.p2pTutoringSystem.entities.Session;
 import com.example.p2pTutoringSystem.services.SessionService;
@@ -87,6 +88,19 @@ public class SessionController {
         String response = sessionService.updateNote(sessionId, editNoteRequest);
         if(response.equals("Note saved successfully")){
            return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @PutMapping("/update-status-completed/{sessionId}")
+    public ResponseEntity<?> setStatusCompleted(
+            @PathVariable long sessionId,
+            @RequestBody SetStatusCompletedRequest setStatusCompletedRequest) {
+
+        String response = sessionService.updateStatusComplete(sessionId, setStatusCompletedRequest);
+        if(response.equals("Session Completed")){
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

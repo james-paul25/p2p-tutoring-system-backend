@@ -2,6 +2,7 @@ package com.example.p2pTutoringSystem.services;
 
 import com.example.p2pTutoringSystem.dto.EditBioRequest;
 import com.example.p2pTutoringSystem.dto.EditNoteRequest;
+import com.example.p2pTutoringSystem.dto.SetStatusCompletedRequest;
 import com.example.p2pTutoringSystem.dto.StudentApplySessionRequest;
 import com.example.p2pTutoringSystem.entities.*;
 import com.example.p2pTutoringSystem.enumarate.SessionStatus;
@@ -118,10 +119,20 @@ public class SessionService {
         return "Note saved successfully";
     }
 
-    public String updateStatusComplete(){
+    public String updateStatusComplete(long sessionId, SetStatusCompletedRequest completedRequest){
+        Optional<Session> sessionOptional = sessionRepository.findBySessionId(sessionId);
+        if (!sessionOptional.isPresent()) {
+            return "Session Not Found";
+        }
+        Session session = sessionOptional.get();
 
+        if(session.getSessionDate().isEqual(completedRequest.getSessionDate()) &&
+                session.getSessionTime().equals(completedRequest.getSessionTime())){
+            session.setSessionStatus(SessionStatus.COMPLETED);
+            sessionRepository.save(session);
+        }
 
-        return null;
+        return "Session Completed";
     }
 
 }
