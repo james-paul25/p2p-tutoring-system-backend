@@ -94,11 +94,9 @@ public class SessionController {
     }
 
     @PutMapping("/update-status-completed/{sessionId}")
-    public ResponseEntity<?> setStatusCompleted(
-            @PathVariable long sessionId,
-            @RequestBody SetStatusCompletedRequest setStatusCompletedRequest) {
+    public ResponseEntity<?> setStatusCompleted(@PathVariable long sessionId) {
 
-        String response = sessionService.updateStatusComplete(sessionId, setStatusCompletedRequest);
+        String response = sessionService.updateStatusComplete(sessionId);
         if(response.equals("Session Completed")){
             return ResponseEntity.ok(response);
         }

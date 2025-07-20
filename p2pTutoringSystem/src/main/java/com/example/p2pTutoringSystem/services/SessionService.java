@@ -10,6 +10,9 @@ import com.example.p2pTutoringSystem.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -119,20 +122,33 @@ public class SessionService {
         return "Note saved successfully";
     }
 
-    public String updateStatusComplete(long sessionId, SetStatusCompletedRequest completedRequest){
+    public String updateStatusComplete(long sessionId) {
         Optional<Session> sessionOptional = sessionRepository.findBySessionId(sessionId);
+
         if (!sessionOptional.isPresent()) {
             return "Session Not Found";
         }
+
         Session session = sessionOptional.get();
 
-        if(session.getSessionDate().isEqual(completedRequest.getSessionDate()) &&
-                session.getSessionTime().equals(completedRequest.getSessionTime())){
-            session.setSessionStatus(SessionStatus.COMPLETED);
-            sessionRepository.save(session);
+        if (session.getSessionStatus() == SessionStatus.COMPLETED) {
+            return "Session Already Completed";
         }
 
-        return "Session Completed";
+        LocalDate sessionDate = session.getSessionDate();
+        LocalTime sessionTime = session.getSessionTime();
+
+        LocalDateTime sessionDateTime = LocalDateTime.of(sessionDate, sessionTime);
+        LocalDateTime now = LocalDateTime.now();
+
+        if (sessionDateTime.isBefore(now) || sessionDateTime.isEqual(now)) {
+            session.setSessionStatus(SessionStatus.COMPLETED);
+            sessionRepository.save(session);
+            return "Session Completed";
+        } else {
+            return "Session Not Yet Due";
+        }
     }
+
 
 }
