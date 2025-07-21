@@ -49,8 +49,11 @@ public class Session {
     @Column(nullable = false, name = "session_date")
     private LocalDate sessionDate;
 
-    @Column(nullable = false, name = "session_time")
-    private LocalTime sessionTime;
+    @Column(nullable = false, name = "session_start_time")
+    private LocalTime sessionStartTime;
+
+    @Column(nullable = false, name = "session_end_time")
+    private LocalTime sessionEndTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false, name="created_at")
@@ -70,14 +73,15 @@ public class Session {
     }
 
     public Session(Student student, Tutor tutor, Subject subject, SessionStatus sessionStatus,
-                   LocalDate sessionDate, LocalTime sessionTime,
+                   LocalDate sessionDate, LocalTime sessionStartTime, LocalTime sessionEndTime,
                    String topic, User tutorUser, User studentUser) {
         this.student = student;
         this.tutor = tutor;
         this.subject = subject;
         this.sessionStatus = sessionStatus;
         this.sessionDate = sessionDate;
-        this.sessionTime = sessionTime;
+        this.sessionStartTime = sessionStartTime;
+        this.sessionEndTime = sessionEndTime;
         this.topic = topic;
         this.studentUser = studentUser;
         this.tutorUser = tutorUser;
