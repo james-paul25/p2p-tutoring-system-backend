@@ -61,7 +61,8 @@ public class SessionService {
                 subject,
                 SessionStatus.PENDING,
                 sessionRequest.getSessionDate(),
-                sessionRequest.getSessionTime(),
+                sessionRequest.getSessionStartTime(),
+                sessionRequest.getSessionEndTime(),
                 sessionRequest.getTopic(),
                 tutorUser,
                 studentUser
@@ -136,7 +137,7 @@ public class SessionService {
         }
 
         LocalDate sessionDate = session.getSessionDate();
-        LocalTime sessionTime = session.getSessionTime();
+        LocalTime sessionTime = session.getSessionEndTime();
 
         LocalDateTime sessionDateTime = LocalDateTime.of(sessionDate, sessionTime);
         LocalDateTime now = LocalDateTime.now();

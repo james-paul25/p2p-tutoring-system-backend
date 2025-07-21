@@ -11,7 +11,8 @@ import java.time.LocalTime;
 @Setter
 public class StudentApplySessionRequest {
     private LocalDate sessionDate;
-    private LocalTime sessionTime;
+    private LocalTime sessionStartTime;
+    private LocalTime sessionEndTime;
     private String topic;
     private long tutorUser;
     private long studentUser;
