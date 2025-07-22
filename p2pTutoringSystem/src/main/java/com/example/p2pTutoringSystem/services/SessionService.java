@@ -75,17 +75,17 @@ public class SessionService {
         return sessionRepository.findAll();
     }
 
-    public boolean updateStatus(long sessionId, String status) {
+    public String updateStatus(long sessionId, String status) {
 
         Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
         if (sessionOptional.isPresent()) {
             Session session = sessionOptional.get();
             session.setSessionStatus(SessionStatus.valueOf(status));
             sessionRepository.save(session);
-            return true;
+            return "Updated successfully.";
         }
 
-        return false;
+        return "Updated failed.";
     }
 
     public List<Session> getSessionByTutor(long tutorId){

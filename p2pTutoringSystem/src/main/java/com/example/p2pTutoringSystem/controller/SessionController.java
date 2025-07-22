@@ -48,12 +48,12 @@ public class SessionController {
             @PathVariable long sessionId,
             @RequestBody SessionStatusUpdateRequest sessionStatusUpdateRequest) {
 
-        boolean updated = sessionService.updateStatus(sessionId, sessionStatusUpdateRequest.getStatus());
+        String response = sessionService.updateStatus(sessionId, sessionStatusUpdateRequest.getStatus());
 
-        if(updated){
-            return ResponseEntity.ok(sessionStatusUpdateRequest);
+        if(response.equals("Updated successfully.")){
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Session not found.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
