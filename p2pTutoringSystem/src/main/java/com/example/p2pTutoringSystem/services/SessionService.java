@@ -137,12 +137,12 @@ public class SessionService {
         }
 
         LocalDate sessionDate = session.getSessionDate();
-        LocalTime sessionTime = session.getSessionEndTime();
+        LocalTime sessionEndTime = session.getSessionEndTime();
 
-        LocalDateTime sessionDateTime = LocalDateTime.of(sessionDate, sessionTime);
+        LocalDateTime sessionDateTime = LocalDateTime.of(sessionDate, sessionEndTime);
         LocalDateTime now = LocalDateTime.now();
 
-        if ((sessionDateTime.isBefore(now) || sessionDateTime.isEqual(now)) &&
+        if ((sessionDateTime.isAfter(now) || sessionDateTime.isEqual(now)) &&
                 session.getSessionStatus() != SessionStatus.REJECTED) {
             session.setSessionStatus(SessionStatus.COMPLETED);
             sessionRepository.save(session);
