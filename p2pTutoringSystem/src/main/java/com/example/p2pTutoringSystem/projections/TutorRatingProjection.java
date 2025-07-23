@@ -1,6 +1,8 @@
 package com.example.p2pTutoringSystem.projections;
 
+import com.example.p2pTutoringSystem.entities.Tutor;
+
 public interface TutorRatingProjection {
-    Long getTutorId();
+    Tutor getTutor();
     Double getAverageRating();
 }

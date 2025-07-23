@@ -18,7 +18,7 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
     Optional<Rate> findByRateId(Long rateId);
     Optional<Rate> findByStudentAndTutor(Student student, Tutor tutor);
 
-    @Query("SELECT r.tutor.tutorId AS tutorId, AVG(r.rating) AS averageRating " +
-            "FROM Rate r GROUP BY r.tutor.tutorId")
+    @Query("SELECT r.tutor AS tutor, AVG(r.rating) AS averageRating FROM Rate r GROUP BY r.tutor")
     List<TutorRatingProjection> findAverageRatingGroupedByTutor();
+
 }

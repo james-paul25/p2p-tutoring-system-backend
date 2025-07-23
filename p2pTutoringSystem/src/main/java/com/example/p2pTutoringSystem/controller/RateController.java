@@ -33,7 +33,7 @@ public class RateController {
 
     }
 
-    @GetMapping("/average")
+    @GetMapping("/rating")
     public List<TutorRatingProjection> getAverageRatings() {
         return rateService.getAverageRatingsByTutor();
     }
