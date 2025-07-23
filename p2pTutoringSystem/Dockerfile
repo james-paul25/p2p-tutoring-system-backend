@@ -1,14 +1,26 @@
-# Use official lightweight OpenJDK image
-FROM eclipse-temurin:17-jdk-jammy
+# === Build stage ===
+FROM maven:3.9.5-eclipse-temurin-17 AS builder
 
-# Set working directory inside container
+# Set working dir
 WORKDIR /app
 
-# Copy your built JAR file to the image
-COPY target/p2pTutoringSystem-0.0.1-SNAPSHOT.jar app.jar
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Expose the port Spring Boot uses
-EXPOSE 8080
+# Copy the source code
+COPY src ./src
 
-# Start the Spring Boot application
+# Build the application
+RUN mvn clean package -DskipTests
+
+# === Runtime stage ===
+FROM eclipse-temurin:17-jdk-jammy
+
+WORKDIR /app
+
+# Copy the JAR from the builder stage
+COPY --from=builder /app/target/*.jar app.jar
+
+# Run the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
