@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: p2p-tutoring-springboot
+    env: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://root:mRdXtSYPrDmVcBpXWfSIlgOOaTACofSu@crossover.proxy.rlwy.net:16459/railway
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: mRdXtSYPrDmVcBpXWfSIlgOOaTACofSu
