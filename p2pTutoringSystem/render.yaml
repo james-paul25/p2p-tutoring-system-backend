@@ -7,8 +7,8 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://root:mRdXtSYPrDmVcBpXWfSIlgOOaTACofSu@crossover.proxy.rlwy.net:16459/railway
+        value: ${SPRING_DATASOURCE_URL}
       - key: SPRING_DATASOURCE_USERNAME
-        value: root
+        value: ${SPRING_DATASOURCE_USERNAME}
       - key: SPRING_DATASOURCE_PASSWORD
-        value: mRdXtSYPrDmVcBpXWfSIlgOOaTACofSu
+        value: ${SPRING_DATASOURCE_PASSWORD}
